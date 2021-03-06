@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kill the Monster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app-root" class="grid-container" v-cloak>
+    <section class="grid-x grid-margin-x grid-padding-y">
+      <div class="small-6 cell">
+        <h1 class="text-center">YOU</h1>
+        <div class="healthbar">
+          <div class="healthbar text-center" 
+               style="background-color: green; color: white;"
+               :style="{ width: playerHealth + '%' }">
+            <p class="healthbar-text">
+              {{ playerHealth }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="small-6 cell">
+        <h1 class="text-center">MONSTER</h1>
+        <div class="healthbar">
+          <div class="healthbar text-center" 
+               style="background-color: green; color: white;"
+               :style="{ width: monsterHealth + '%' }">
+            <p class="healthbar-text">
+              {{ monsterHealth }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="grid-x grid-margin-x controls" v-if="!gameIsRunning">
+      <div class="small-12 cell">
+        <button id="start-game" @click="startGame">START NEW GAME</button>
+      </div>
+    </section>
+    <section class="grid-x grid-margin-x controls" v-else>
+      <div class="small-12 cell">
+        <button id="attack" @click="attack">ATTACK</button>
+        <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+        <button id="heal" @click="heal">HEAL</button>
+        <button id="give-up" @click="giveUp">GIVE UP</button>
+      </div>
+    </section>
+    <section class="grid-x grid-margin-x log" v-if="turns.length > 0 && gameIsRunning">
+      <div class="small-12 cell">
+        <ul>
+          <li v-for="turn in turns" :class="{
+            'player-turn': turn.isPlayer, 'monster-turn': !turn.isPlayer }">
+            {{ turn.text }}
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
